@@ -6,7 +6,6 @@
   co = checkout
   br = branch
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  ctags = !.git/hooks/ctags
 [color]
   branch = auto
   diff = auto
@@ -15,12 +14,7 @@
   status = auto
   ui = 1
 [user]
-  name = <%= @name.inspect %>
-  email = <%= @email.inspect %>
+  name = Change Me
+  email = change@me
 [branch]
   autosetuprebase = always
-[gist]
-  private = yes
-  browse = yes
-[github]
-  user = <%= @github.inspect %>
