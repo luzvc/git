@@ -9,7 +9,10 @@ def setup(users)
 end
 
 def install_git_core
-  package "git-core"
+  package "git-core" do
+    options "--force-yes"
+    action :upgrade
+  end
 end
 
 def download_gitconfig(user)
