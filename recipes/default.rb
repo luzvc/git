@@ -16,11 +16,20 @@ def install_git_core
 end
 
 def download_gitconfig(user)
-  remote_file "Create .gitconfig" do
-    path "/home/#{user}/.gitconfig"
-    user user
-    source "#{node['git']['gist']}"
-    not_if { File.exists?("/home/#{user}/.gitconfig") }
+  if node['git']['gist']
+    remote_file "Create .gitconfig" do
+      path "/home/#{user}/.gitconfig"
+      user user
+      source "#{node['git']['gist']}"
+      not_if { File.exists?("/home/#{user}/.gitconfig") }
+    end
+  else
+    template "/home/#{user}/.gitconfig" do
+      source "gitconfig.erb"
+      owner user
+      mode "644"
+      action :create_if_missing
+    end
   end
 end
 
