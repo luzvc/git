@@ -1,10 +1,10 @@
 include_recipe "apt"
 
-def setup(users)
+def setup(users, gist)
   install_git_core
 
   users.each do |user|
-    download_gitconfig(user)
+    download_gitconfig(user, gist)
   end
 end
 
@@ -15,12 +15,12 @@ def install_git_core
   end
 end
 
-def download_gitconfig(user)
-  if node['git']['gist']
+def download_gitconfig(user, gist)
+  if gist && gist.length > 0
     remote_file "Create .gitconfig" do
       path "/home/#{user}/.gitconfig"
       user user
-      source "#{node['git']['gist']}"
+      source gist
       not_if { File.exists?("/home/#{user}/.gitconfig") }
     end
   else
@@ -33,6 +33,7 @@ def download_gitconfig(user)
   end
 end
 
-users = node['git']['users']
+users = node[:git][:users]
+gist = node[:git][:gist]
 
-setup(users)
+setup(users, gist)
